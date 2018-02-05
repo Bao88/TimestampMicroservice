@@ -14,10 +14,7 @@ body {
 	background-image: url("https://img-fotki.yandex.ru/get/17859/85893628.c67/0_16f717_c4a5da7b_orig.png"),
       linear-gradient(to right, rgba(250, 100, 100, 0.9), rgba(255, 255, 255, 0));
   background-repeat: no-repeat;
-/* background-size: cover; */
   background-position: bottom right, bottom left;
-/*   background-attachment: fixed; */
-/* 	text-align: center; */
 }
 
 .container {
