@@ -8,7 +8,7 @@
 var fs = require('fs');
 var express = require('express');
 var app = express();
-
+// --------------------------------- freeCodeCamp codes ---------------------------------
 if (!process.env.DISABLE_XORIGIN) {
   app.use(function(req, res, next) {
     var allowedOrigins = ['https://narrow-plane.gomix.me', 'https://www.freecodecamp.com'];
@@ -38,12 +38,6 @@ app.route('/')
 		  res.sendFile(process.cwd() + '/views/index.html');
     })
 
-// Respond not found to all the wrong routes
-app.use(function(req, res, next){
-  res.status(404);
-  res.type('txt').send('Not found');
-});
-
 // Error Middleware
 app.use(function(err, req, res, next) {
   if(err) {
@@ -57,3 +51,26 @@ app.listen(process.env.PORT, function () {
   console.log('Node.js listening ...');
 });
 
+// --------------------------------- freeCodeCamp codes ---------------------------------
+
+// Respond to all routes, assuming the user can read and use the service
+app.use(function(req, res, next){
+  // console.log(req.url);
+  var strArray = req.url.slice(1).split("%20");
+  var object = {"unix": null, "natural":null};
+  console.log(strArray);
+  var month = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"];
+
+  if(isNaN(strArray[0])){    // Request is not a number, convert string to unix timestamp, and copy the natural date back
+    object.unix = new Date(strArray.join(" ")).getTime() / 1000;
+    object.natural = strArray.join(" ");
+  } else {  // Request is a unix timestamp, copy the timestamp in the object, then convert it to natural language form
+    var date = new Date(+strArray[0] * 1000);
+    object.unix = strArray.toString();
+    object.natural = month[date.getMonth()] + " " + date.getDay() + ", " + date.getFullYear();
+  }
+//   Send back the JSON to the client who requested
+  res.status(400);
+  res.type("json").send(object);
+});
